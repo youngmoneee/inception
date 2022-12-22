@@ -1,0 +1,12 @@
+[client]
+socket=/var/lib/mysql/mysql.sock
+
+default-character-set=utf8mb4	#Ko-KR
+port=3306
+
+[server]
+socket=/var/lib/mysql/mysql.sock
+bind-address=0.0.0.0
+port=3306
+
+datadir=/var/lib/mysql
