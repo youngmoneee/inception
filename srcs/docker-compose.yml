@@ -1,0 +1,50 @@
+version : "3.9"
+
+networks :
+  inceptionet :
+    name : inceptionet
+    driver : bridge
+
+volumes:
+  DB:
+    name: DB
+  WordPress:
+    name: WordPress
+
+services :
+  nginx :
+    container_name : nginx
+    build : ./requirements/nginx
+    restart : on-failure
+    depends_on :
+      - wordpress
+    ports :
+      - 443:443
+    networks :
+      - inceptionet
+    volumes :
+      - WordPress:/var/www
+
+  wordpress :
+    container_name : wordpress
+    build : ./requirements/wordpress
+    restart : on-failure
+    depends_on :
+      - mariadb
+    ports:
+      - 9000:9000
+    networks:
+      - inceptionet
+    volumes:
+      - WordPress:/var/www
+
+  mariadb :
+    container_name: mariadb
+    build : ./requirements/mariadb
+    restart: on-failure
+    ports:
+      - 3306:3306
+    networks:
+      - inceptionet
+    volumes:
+      - DB:/etc/mysql
