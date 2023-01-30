@@ -13,9 +13,10 @@ volumes:
 
 services :
   nginx :
-    container_name : nginx
     build : ./requirements/nginx
-    restart : on-failure
+    image: nginx
+    container_name : nginx
+    restart : always
     depends_on :
       - wordpress
     ports :
@@ -26,9 +27,10 @@ services :
       - WordPress:/var/www
 
   wordpress :
-    container_name : wordpress
     build : ./requirements/wordpress
-    restart : on-failure
+    image: wordpress
+    container_name : wordpress
+    restart : always
     depends_on :
       - mariadb
     ports:
@@ -39,12 +41,13 @@ services :
       - WordPress:/var/www
 
   mariadb :
-    container_name: mariadb
     build : ./requirements/mariadb
-    restart: on-failure
+    image: mariadb
+    container_name: mariadb
+    restart: always
     ports:
       - 3306:3306
     networks:
       - inceptionet
     volumes:
-      - DB:/etc/mysql
+      - DB:/mymy

@@ -25,5 +25,10 @@ wp :
 	srcs/requirements/wordpress/run.sh
 	docker container rm wordpress
 
+db :
+	docker build -t mariadb srcs/requirements/mariadb/
+	srcs/requirements/mariadb/run.sh
+	docker container rm mariadb
+
 rm :
-	docker container rm nginx wordpress
+	@docker container rm nginx wordpress mariadb
