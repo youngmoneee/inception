@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/sh
 
 if ! command -v wp &> /dev/null
 then
@@ -6,21 +6,19 @@ then
   exit 1
 fi
 
-# Define variables for site URL, title, and admin user
-site_url="http://example.com"
-site_title="Example Site"
-admin_user="admin"
-admin_password="admin_password"
-admin_email="admin@example.com"
+chown -R :www-data /var/www/wordpress
+wp core download --path=/var/www/wordpress --locale=ko_KR --allow-root
+wp config create --dbname=$V_DB --dbuser=$V_USR --dbpass=$V_PW --dbhost=$V_HOST --dbcharset="utf8" --allow-root
 
 # Check if WordPress is installed
-if ! wp core is-installed
+if ! wp core is-installed --allow-root
 then
   # Install WordPress
-  wp core install --url=$site_url --title=$site_title --admin_user=$admin_user --admin_password=$admin_password --admin_email=$admin_email
+  wp core install --url=$DOMAIN_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PW --admin_email=$WP_ADMIN_EMAIL --allow-root
 else
   # Re-install WordPress
-  wp site delete --yes
-  wp core install --url=$site_url --title=$site_title --admin_user=$admin_user --admin_password=$admin_password --admin_email=$admin_email
+  wp site delete --yes --allow-root
+  wp core install --url=$DOMAIN_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PW --admin_email=$PW_ADMIN_EMAIL --allow-root
 fi
-
+wp plugin update --all --allow-root
+exec php-fpm8 -F

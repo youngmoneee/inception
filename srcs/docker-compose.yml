@@ -2,7 +2,7 @@ version : "3.9"
 
 networks :
   inceptionet :
-    name : inceptionet
+    name: inceptionet
     driver : bridge
 
 volumes:
@@ -25,6 +25,8 @@ services :
       - inceptionet
     volumes :
       - WordPress:/var/www
+    env_file:
+      - .env
 
   wordpress :
     build : ./requirements/wordpress
@@ -39,6 +41,8 @@ services :
       - inceptionet
     volumes:
       - WordPress:/var/www
+    env_file:
+      - .env
 
   mariadb :
     build : ./requirements/mariadb
@@ -51,3 +55,5 @@ services :
       - inceptionet
     volumes:
       - DB:/mymy
+    env_file:
+      - .env

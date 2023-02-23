@@ -1,17 +1,17 @@
 FROM alpine:3.16
 
-RUN apk update && apk upgrade && apk add --no-cache mariadb==10.6.10-r0 dumb-init
+RUN apk update && apk upgrade && apk add --no-cache mariadb mariadb-client dumb-init
 
-RUN mkdir -p /run/mysqld /var/lib/mysql
+RUN	adduser -S mariadb && addgroup -S mariadb
 
-#RUN	adduser -S mysql &&	addgroup -S mysql
-RUN chown -R mysql:mysql /var/lib/mysql /run/mysqld
+RUN mkdir -p /var/run/mysqld
+RUN chown -R mariadb:mariadb /var/lib/mysql /var/run/mysqld
+
 COPY conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
-COPY ./init.sql /var/lib/mysql/init.sql
-RUN mariadb-install-db
+COPY ./tools /tools
+
+RUN chmod 777 -R /var/lib/mysql /usr/bin/dumb-init /tools
 
 EXPOSE 3306
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["mariadbd"]
-#ENTRYPOINT sh
-#ENTRYPOINT ["/bin/sh", "tools/init.sh"]
+ENTRYPOINT ["dumb-init", "--", "/bin/sh", "/tools/init.sh"]
+CMD ["mariadbd", "--user=mariadb", "--init-file=/tools/init.sql"]

@@ -1,17 +1,5 @@
-[client-server]
-#user = wordpress
+[server]
+user = mariadb
 bind-address=0.0.0.0
 port=3306
-
-[server]
-disable_unix_socket
 datadir=/var/lib/mysql
-user = mysql
-#group = wordpress
-
-#listen.owner = wordpress
-#listen.group = wordpress
-#listen.mode = 0660
-
-#listen = mariadb:3306
-
