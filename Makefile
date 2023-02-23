@@ -4,23 +4,14 @@ CONF = ./srcs/docker-compose.yml
 all : $(NAME)
 
 $(NAME) :
-	docker-compose -f $(CONF) up --build -d
-
+	docker compose -f $(CONF) up --build -d
 stop:
-	docker-compose -f $(CONF) down
-
+	docker compose -f $(CONF) down
 restart:
-	docker-compose -f $(CONF) restart
-
-nginx :
-	docker build -t nginx srcs/requirements/nginx/
-	srcs/requirements/nginx/run.sh
-	docker container rm nginx
-
+	docker compose -f $(CONF) restart
 clean :
-	sudo docker-compose -f srcs/docker-compose.yml down --remove-orphans --rmi all --volumes
+	docker compose -f srcs/docker-compose.yml down --remove-orphans --rmi all --volumes
 	$(docker rm ${docker ps -aq})
-
 fclean : clean
 	rm -rf ${HOME}/data
 	docker network prune -f

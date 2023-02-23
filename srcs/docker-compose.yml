@@ -54,6 +54,6 @@ services :
     networks:
       - inceptionet
     volumes:
-      - DB:/mymy
+      - DB:/var/lib/mysql
     env_file:
       - .env
