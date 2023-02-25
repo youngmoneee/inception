@@ -1,9 +1,8 @@
 FROM alpine:3.16
 
-RUN apk update && apk upgrade && apk add --no-cache mariadb mariadb-client dumb-init
+RUN apk update && apk upgrade && apk add --no-cache mariadb dumb-init
 
 RUN	adduser -S mariadb && addgroup -S mariadb
-
 RUN mkdir -p /var/run/mysqld
 RUN chown -R mariadb:mariadb /var/lib/mysql /var/run/mysqld
 
