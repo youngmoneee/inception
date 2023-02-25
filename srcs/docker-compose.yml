@@ -5,11 +5,6 @@ networks :
     name: inceptionet
     driver : bridge
 
-volumes:
-  DB:
-    name: DB
-  WordPress:
-    name: WordPress
 
 services :
   nginx :
@@ -57,3 +52,19 @@ services :
       - DB:/var/lib/mysql
     env_file:
       - .env
+
+volumes:
+  DB:
+    name: DB
+    driver: local
+    driver_opts:
+      type: volume
+      o: 'bind'
+      device: '/home/youngpar/data/DB'
+  WordPress:
+    name: WordPress
+    driver: local
+    driver_opts:
+      type: volume
+      o: 'bind'
+      device: '/home/youngpar/data/WordPress'

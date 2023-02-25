@@ -5,6 +5,7 @@ all : $(NAME)
 
 $(NAME) :
 	echo "127.0.0.1 youngpar.42.fr" >> /etc/hosts
+	sudo mkdir -p ${HOME}/youngpar/data/WordPress ${HOME}/youngpar/data/DB
 	docker compose -f $(CONF) up --build -d
 stop:
 	docker compose -f $(CONF) down
