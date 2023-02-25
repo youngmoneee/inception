@@ -1,4 +1,4 @@
-FROM alpine:3.16
+FROM alpine
 
 RUN apk update && apk upgrade && apk add --no-cache nginx openssl && mkdir -p /etc/nginx/ssl
 COPY conf/nginx.conf /etc/nginx/http.d/inception.conf

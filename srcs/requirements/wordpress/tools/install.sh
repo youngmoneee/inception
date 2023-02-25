@@ -20,5 +20,6 @@ else
   wp site delete --yes --allow-root
   wp core install --url=$DOMAIN_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PW --admin_email=$PW_ADMIN_EMAIL --allow-root
 fi
+wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_PASSWORD --allow-root
 wp plugin update --all --allow-root
 exec php-fpm8 -F

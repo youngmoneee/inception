@@ -4,6 +4,7 @@ CONF = ./srcs/docker-compose.yml
 all : $(NAME)
 
 $(NAME) :
+	echo "127.0.0.1 youngpar.42.fr" >> /etc/hosts
 	docker compose -f $(CONF) up --build -d
 stop:
 	docker compose -f $(CONF) down
